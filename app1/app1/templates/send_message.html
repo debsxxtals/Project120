@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Send Message</title>
+</head>
+<body>
+    <h1>Send a Message</h1>
+
+    <!-- Success or error message display -->
+    {% if request.GET.success %}
+        <p style="color: green;">Message sent and encrypted successfully!</p>
+    {% endif %}
+    
+    {% if request.GET.error %}
+        <p style="color: red;">{{ request.GET.error }}</p>
+    {% endif %}
+
+    <!-- Message sending form -->
+    <form method="post">
+        {% csrf_token %}
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required></textarea>
+        <button type="submit">Send</button>
+    </form>
+
+</body>
+</html>
