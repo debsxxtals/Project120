@@ -1,0 +1,2 @@
+trying to finish the functionality sa App2 na magsend og encrypted message sa database and magsend og confirmation sa App1. then App1 can receive. 
+
