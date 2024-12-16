@@ -33,24 +33,34 @@ import requests
 from django.shortcuts import render
 from django.http import HttpResponse
 
+
 def send_message(request):
     if request.method == 'POST':
-        message = request.POST.get('message')
-        if message:
-            encrypted_message = encrypt_message(message)  # Encrypt the message
+        amount = request.POST.get('amount')
+        bank_account = request.POST.get('bank_account')
+        if amount and bank_account:
+            # Encrypt both messages
+            encrypted_amount = encrypt_message(amount)
+            encrypted_bank_account = encrypt_message(bank_account)
+            username = request.user.username
 
-            # Send the encrypted message to App2's API endpoint via a POST request
             try:
-                # Convert encrypted message to a proper format
                 response = requests.post(
                     'http://127.0.0.1:8001/api/messages/',  # App2's endpoint URL
-                    json={'message': encrypted_message.decode()}  # Send as JSON (not form-data)
+                    json={
+                        'username': username,
+                        'amount': encrypted_amount.decode(),
+                        'bank_account': encrypted_bank_account.decode()
+                    }
                 )
 
                 if response.status_code == 200:
-                    return HttpResponse("Message sent and encrypted successfully!")
+                    # Get the acknowledgment message from App2
+                    acknowledgment_message = response.json().get('message')
+                    return render(request, 'send_message.html', {'acknowledgment_message': acknowledgment_message})
                 else:
                     return HttpResponse(f"Failed to send message: {response.status_code}")
             except requests.exceptions.RequestException as e:
                 return HttpResponse(f"Error: {e}")
+
     return render(request, 'send_message.html')

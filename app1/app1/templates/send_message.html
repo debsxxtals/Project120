@@ -1,27 +1,24 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Send Message</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Send a Message</h1>
 
-    <!-- Success or error message display -->
-    {% if request.GET.success %}
-        <p style="color: green;">Message sent and encrypted successfully!</p>
-    {% endif %}
-    
-    {% if request.GET.error %}
-        <p style="color: red;">{{ request.GET.error }}</p>
+    {% if acknowledgment_message %}
+    <p style="color: green">{{ acknowledgment_message }}</p>
     {% endif %}
 
-    <!-- Message sending form -->
     <form method="post">
-        {% csrf_token %}
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required></textarea>
-        <button type="submit">Send</button>
-    </form>
+      {% csrf_token %}
+      <label for="amount">Amount:</label>
+      <textarea id="amount" name="amount" required></textarea><br />
 
-</body>
+      <label for="bank_account">Bank Account:</label>
+      <textarea id="bank_account" name="bank_account" required></textarea><br />
+
+      <button type="submit">Send</button>
+    </form>
+  </body>
 </html>

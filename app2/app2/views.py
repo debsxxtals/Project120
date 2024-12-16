@@ -47,25 +47,57 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 
-# API View to handle incoming encrypted messages
+
 class MessageReceiver(APIView):
     def post(self, request):
-        encrypted_message = request.data.get('message')
+        username = request.data.get('username')
+        amount = request.data.get('amount')
+        bank_account = request.data.get('bank_account')  # Corrected the typo here
 
-        if not encrypted_message:
-            return Response({'status': 'error', 'message': 'No message found in request'}, status=400)
+        if not bank_account:
+            return Response({'status': 'error', 'message': 'No bank account found in request'}, status=400)
 
         try:
             # Decrypt the message
-            decrypted_message = decrypt_message(encrypted_message)  # No need to encode since it's already a string
-            # Optionally store the decrypted message
-            sender = request.user  # Assuming the message sender is the logged-in user
-            Message.objects.create(sender=sender, content=decrypted_message)
+            decrypted_amount = decrypt_message(amount)  # Decrypt amount
+            
 
-            return Response({'status': 'success', 'message': 'Message received and decrypted!'}, status=200)
+            # Save the message along with decrypted content
+            message = Message.objects.create(
+                sender=username,
+                amount=decrypted_amount,
+                bank_account=bank_account,
+            )
+
+            # Send acknowledgment back to App1
+            return Response({
+                'status': 'success',
+                'message': f'{message.sender} successfully withdraws {message.amount} at {message.timestamp}'
+            }, status=200)
 
         except Exception as e:
             return Response({'status': 'error', 'message': str(e)}, status=400)
+
+
+# API View to handle incoming encrypted messages
+# class MessageReceiver(APIView):
+#     def post(self, request):
+#         encrypted_message = request.data.get('message')
+
+#         if not encrypted_message:
+#             return Response({'status': 'error', 'message': 'No message found in request'}, status=400)
+
+#         try:
+#             # Decrypt the message
+#             decrypted_message = decrypt_message(encrypted_message)  # No need to encode since it's already a string
+#             # Optionally store the decrypted message
+#             sender = request.user  # Assuming the message sender is the logged-in user
+#             Message.objects.create(sender=sender, content=decrypted_message)
+
+#             return Response({'status': 'success', 'message': 'Message received and decrypted!'}, status=200)
+
+#         except Exception as e:
+#             return Response({'status': 'error', 'message': str(e)}, status=400)
 
 
 
