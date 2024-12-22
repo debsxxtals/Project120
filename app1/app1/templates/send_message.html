@@ -1,15 +1,80 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Send Message</title>
-  </head>
-  <body>
-    <h1>Send a Message</h1>
+<head>
+  <title>Send Message</title>
 
-    {% if acknowledgment_message %}
-    <p style="color: green">{{ acknowledgment_message }}</p>
-    {% endif %}
-
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+        margin: 0;
+        padding: 20px;
+    }
+    .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 50%;
+        margin: 20px auto;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .header-left {
+        display: flex;
+        align-items: center;
+    }
+    .header-left h2, .header-left p {
+        margin: 0;
+        margin-right: 20px;
+    }
+    a, button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        margin-left: 10px;
+    }
+    a:hover, button:hover {
+        background-color: #45a049;
+    }
+    textarea {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      margin-bottom: 5px;
+      text-align: left;
+    }
+    .success {
+      border: 2px solid #6fd774;
+      border-radius: 5px;
+      text-align: center;
+      width: 50%;
+      margin-top: 10px;
+    }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-left">
+          <h1>Send a Message</h1>
+      </div>
+      <a href="{% url 'landing_page' %}">Home</a>
+    </div>
     <form method="post">
       {% csrf_token %}
       <label for="amount">Amount:</label>
@@ -20,5 +85,11 @@
 
       <button type="submit">Send</button>
     </form>
-  </body>
+    {% if acknowledgment_message %}
+    <div class="success">
+      <p style="color: green">{{ acknowledgment_message }}</p>
+    </div>
+    {% endif %}
+  </div>
+</body>
 </html>

@@ -75,7 +75,7 @@ class MessageReceiver(APIView):
             # Send acknowledgment back to App1
             return Response({
                 'status': 'success',
-                'message': f'{message.sender} successfully withdraws {message.amount} at {message.timestamp}'
+                'message': f'{message.sender} Successfully withdrew {message.amount} at {message.timestamp}'
             }, status=200)
 
         except Exception as e:
