@@ -6,7 +6,7 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f7f7f7;
-            margin: 0;
+            margin: 7%;
             padding: 0;
             display: flex;
             justify-content: center;
@@ -15,64 +15,82 @@
         }
         .container {
             background-color: #fff;
-            padding: 20px;
+            padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 500px;
-            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
         }
         h1 {
             margin-bottom: 20px;
+            color: #333;
+            text-align: center;
         }
         form {
             display: flex;
             flex-direction: column;
         }
-        label {
-            margin-bottom: 5px;
-            text-align: left;
+        form p {
+            margin-bottom: 15px;
         }
         input {
+            width: 100%;
             padding: 10px;
-            margin-bottom: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            width: 100%;
+            font-size: 14px;
         }
         input:focus {
             border-color: #4CAF50;
             outline: none;
             box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
         }
+        ul, ol {
+            color: #5c5c5c;
+            list-style-type: none; 
+            padding: 0; 
+            margin: 0; 
+            font-size: 15px;
+        }
         button {
-            margin-bottom: 10px;
-            padding: 10px;
+            padding: 12px;
             background-color: #4CAF50;
-            color: #fff;
+            color: white;
             border: none;
             border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
         button:hover {
             background-color: #45a049;
         }
-        .messages {
-            margin-top: 15px;
-            color: red;
+        p {
+            font-size: 14px;
+            color: #555;
+            text-align: center;
         }
-        a {
-            margin-top: 10px;
+        p a {
             text-decoration: none;
-            color: #45a049;
+            color: #4CAF50;
+            font-weight: bold;
         }
-        a:hover {
-            color: #2b662e;
+        p a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            button {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Register</h1>
+        <h1>APP1 Register</h1>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
