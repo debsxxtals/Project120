@@ -29,5 +29,5 @@ path('', LoginView.as_view(template_name='login.html'), name='login'),
     path('register/', views.register, name='register'),
     path('landing/', views.landing_page, name='landing_page'),
     path('send_message/', views.send_message, name='send_message'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('logout/', LoginView.as_view(template_name='login.html'), name='logout'),
 ]

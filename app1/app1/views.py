@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from .forms import UserRegistrationForm
 
+import requests
+from django.conf import settings
+
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
@@ -27,6 +30,11 @@ def encrypt_message(message):
     """Encrypt the message using the stored key."""
     encrypted_message = cipher.encrypt(message.encode())  # Convert the string to bytes
     return encrypted_message
+
+def decrypt_message(encrypted_message):
+    """Decrypt the encrypted message using the stored key."""
+    decrypted_message = cipher.decrypt(encrypted_message.encode()).decode()  # Convert bytes to string
+    return decrypted_message
 
 import requests
 
@@ -55,8 +63,11 @@ def send_message(request):
                 )
 
                 if response.status_code == 200:
-                    # Get the acknowledgment message from App2
-                    acknowledgment_message = response.json().get('message')
+                    # Get the encrypted acknowledgment message from App2 
+                    encrypted_acknowledgment_message = response.json().get('message') 
+                    
+                    # Decrypt the acknowledgment message 
+                    acknowledgment_message = decrypt_message(encrypted_acknowledgment_message)
                     return render(request, 'send_message.html', {'acknowledgment_message': acknowledgment_message})
                 else:
                     return HttpResponse(f"Failed to send message: {response.status_code}")

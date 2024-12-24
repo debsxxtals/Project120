@@ -48,14 +48,15 @@ def store_decrypted_message(sender, decrypted_message):
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
+from cryptography.fernet import Fernet 
+from django.conf import settings
 
 
 class MessageReceiver(APIView):
     def post(self, request):
         username = request.data.get('username')
         amount = request.data.get('amount')
-        bank_account = request.data.get('bank_account')  # Corrected the typo here
+        bank_account = request.data.get('bank_account')  
 
         if not bank_account:
             return Response({'status': 'error', 'message': 'No bank account found in request'}, status=400)
@@ -72,10 +73,17 @@ class MessageReceiver(APIView):
                 bank_account=bank_account,
             )
 
+            # Create the acknowledgment message 
+            acknowledgment_message = f'{message.sender} Successfully withdrew {message.amount} at {message.timestamp}'
+
+            # Encrypt the acknowledgment message 
+            encrypted_acknowledgment_message = cipher.encrypt(acknowledgment_message.encode())
+
+
             # Send acknowledgment back to App1
             return Response({
                 'status': 'success',
-                'message': f'{message.sender} Successfully withdrew {message.amount} at {message.timestamp}'
+                'message':  encrypted_acknowledgment_message.decode()
             }, status=200)
 
         except Exception as e:

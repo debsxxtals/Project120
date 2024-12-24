@@ -1,129 +1,158 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Dashboard</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f7f7f7;
-        margin: 0;
-        padding: 20px;
-      }
-      .container {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        width: 80%;
-        margin: 20px auto;
-        overflow: hidden;
-      }
-      .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-      }
-      .header-left h2,
-      .header-left p {
-        margin: 0;
-        margin-right: 20px;
-      }
-      a {
-        padding: 10px 20px;
-        background-color: #4caf50;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-      }
-      a:hover {
-        background-color: #45a049;
-      }
-      h3 {
-        margin-bottom: 15px;
-      }
-      .table-container {
-        width: 100%;
-        overflow-x: auto;
-        margin: 20px 0;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      table,
-      th,
-      td {
-        border: 1px solid #ddd;
-      }
-      th,
-      td {
-        padding: 10px;
-        text-align: left;
-      }
-      th {
-        background-color: #f2f2f2;
-      }
-      .section {
-        margin-bottom: 30px;
-      }
-      .form-group {
-        margin-bottom: 15px;
-      }
-      label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-      }
-      input,
-      textarea,
-      select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-      }
-      button {
-        padding: 10px 20px;
-        background-color: #4caf50;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-      }
-      button:hover {
-        background-color: #45a049;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="header">
-        <div class="header-left">
-          <h1>App2 Dashboard</h1>
-          <p>Welcome, {{ request.user.username }}!</p>
-        </div>
-        <a href="{% url 'logout' %}">Logout</a>
+<head>
+  <title>Admin Dashboard</title>
+  <style>
+    /* General styling */
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #e8f5e9, #c8e6c9);
+      color: #333333;
+      min-height: 100vh; /* Ensure background covers the entire height */
+    }
+
+    /* Container styling */
+    .container {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      margin: 20px auto;
+    }
+
+    /* Header section */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 10px;
+    }
+
+    .header-left h1 {
+      margin: 0;
+      font-size: 28px;
+      color: #4CAF50;
+    }
+
+    .header-left p {
+      margin: 5px 0 0;
+      font-size: 16px;
+      color: #757575;
+    }
+
+    .header a {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .header a:hover {
+      background-color: #388e3c;
+    }
+
+    /* Section headers */
+    h2 {
+      color: #4CAF50;
+      margin-top: 20px;
+    }
+
+    /* Lists */
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+    }
+
+    ul li {
+      padding: 10px;
+      background-color: #f1f8e9;
+      border: 1px solid #c8e6c9;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      color: #333333;
+    }
+
+    /* Table styling */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    table th,
+    table td {
+      text-align: left;
+      padding: 12px;
+      border: 1px solid #c8e6c9;
+    }
+
+    table th {
+      background-color: #81c784;
+      color: #ffffff;
+    }
+
+    table tr:nth-child(even) {
+      background-color: #f1f8e9;
+    }
+
+    table tr:nth-child(odd) {
+      background-color: #c8e6c9;
+    }
+
+    /* Buttons */
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #388e3c;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-left">
+        <h1>Admin Dashboard</h1>
+        <p>Welcome, {{ request.user.username }}!</p>
       </div>
+      <a href="{% url 'logout' %}">Logout</a>
+    </div>
 
-      <h2>Users</h2>
-      <ul>
-        {% for user in users %}
-        <li>{{ user }}</li>
-        {% endfor %}
-      </ul>
-
-      <h2>Messages</h2>
-      <div class="table-container">
-        <table>
+    <h2>Messages</h2>
+    <div class="table-container">
+      <table>
+        <thead>
           <tr>
             <th>Username</th>
             <th>Bank Account</th>
             <th>Amount Withdrawn</th>
             <th>Timestamp</th>
           </tr>
+        </thead>
+        <tbody>
           {% for message in messages %}
           <tr>
             <td>{{ message.sender }}</td>
@@ -132,10 +161,9 @@
             <td>{{ message.timestamp }}</td>
           </tr>
           {% endfor %}
-        </table>
-      </div>
-
-      <!-- Display the acknowledgment from App2 -->
+        </tbody>
+      </table>
     </div>
-  </body>
+  </div>
+</body>
 </html>

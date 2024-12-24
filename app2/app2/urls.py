@@ -28,7 +28,7 @@ urlpatterns = [
     path('', LoginView.as_view(template_name='login.html'), name='login'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('api/messages/', MessageReceiver.as_view(), name='receive_message'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('logout/', LoginView.as_view(template_name='login.html'), name='logout'),
 
 
 ]

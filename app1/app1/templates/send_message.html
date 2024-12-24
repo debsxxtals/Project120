@@ -2,93 +2,140 @@
 <html>
 <head>
   <title>Send Message</title>
-
   <style>
+    /* General styling */
     body {
-        font-family: Arial, sans-serif;
-        background-color: #f7f7f7;
+        font-family: 'Roboto', Arial, sans-serif;
         margin: 0;
-        padding: 20px;
+        padding: 0;
+        background: linear-gradient(to bottom, #e8f5e9, #c8e6c9);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
+
+    /* Container styling */
     .container {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        width: 50%;
-        margin: 20px auto;
+        background-color: #ffffff;
+        width: 80%;
+        max-width: 600px;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
     }
+
+    /* Header section */
     .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        border-bottom: 2px solid #e0e0e0;
+        padding-bottom: 15px;
         margin-bottom: 20px;
     }
-    .header-left {
-        display: flex;
-        align-items: center;
-    }
-    .header-left h2, .header-left p {
+
+    .header-left h1 {
         margin: 0;
-        margin-right: 20px;
+        color: #4CAF50;
+        font-size: 1.8rem;
     }
-    a, button {
+
+    .header a {
         padding: 10px 20px;
         background-color: #4CAF50;
-        color: #fff;
+        color: #ffffff;
         text-decoration: none;
+        font-size: 1rem;
         border-radius: 5px;
-        transition: background-color 0.3s;
-        margin-left: 10px;
+        transition: 0.3s;
     }
-    a:hover, button:hover {
-        background-color: #45a049;
+
+    .header a:hover {
+        background-color: #388e3c;
     }
-    textarea {
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
+
+    /* Form styling */
     form {
-      display: flex;
-      flex-direction: column;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
     }
+
     label {
-      margin-bottom: 5px;
-      text-align: left;
+        font-weight: bold;
+        color: #4CAF50;
     }
+
+    textarea {
+        width: 100%;
+        height: 80px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        color: #555;
+        resize: vertical;
+    }
+
+    button {
+        padding: 12px;
+        background-color: #4CAF50;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background-color: #388e3c;
+    }
+
+    /* Acknowledgment message styling */
     .success {
-      border: 2px solid #6fd774;
-      border-radius: 5px;
-      text-align: center;
-      width: 50%;
-      margin: 20px auto; /* Centers horizontally */
-      padding: 10px;
+        margin-top: 20px;
+        padding: 15px;
+        border: 2px solid #81c784;
+        border-radius: 5px;
+        background-color: #e8f5e9;
+        text-align: center;
     }
-</style>
+
+    .success p {
+        margin: 0;
+        font-size: 1rem;
+        color: #4CAF50;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
+    <!-- Header Section -->
     <div class="header">
       <div class="header-left">
-          <h1>Send a Message</h1>
+        <h1>Send a Message</h1>
       </div>
       <a href="{% url 'landing_page' %}">Home</a>
     </div>
+
+    <!-- Form Section -->
     <form method="post">
       {% csrf_token %}
       <label for="amount">Amount:</label>
-      <textarea id="amount" name="amount" required></textarea><br />
+      <textarea id="amount" name="amount" required></textarea>
 
       <label for="bank_account">Bank Account:</label>
-      <textarea id="bank_account" name="bank_account" required></textarea><br />
+      <textarea id="bank_account" name="bank_account" required></textarea>
 
       <button type="submit">Send</button>
     </form>
+
+    <!-- Acknowledgment Message -->
     {% if acknowledgment_message %}
     <div class="success">
-      <p style="color: green">{{ acknowledgment_message }}</p>
+      <p>{{ acknowledgment_message }}</p>
     </div>
     {% endif %}
   </div>
